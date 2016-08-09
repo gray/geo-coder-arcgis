@@ -57,8 +57,8 @@ sub geocode {
     $location = Encode::encode('utf-8', $location);
 
     my $uri = URI->new(
-        'http://tasks.arcgis.com/ArcGIS/rest/services/WorldLocator/'
-            . 'GeocodeServer/findAddressCandidates'
+        'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/'
+            . 'findAddressCandidates'
     );
     $uri->scheme('https') if $self->{https};
     $uri->query_form(
@@ -76,10 +76,7 @@ sub geocode {
     # HTTP::Message will decode the character encoding.
     $res->content_type('text/plain');
 
-    my $content = $res->decoded_content;
-    return unless $content;
-
-    my $data = eval { from_json($content) };
+    my $data = eval { from_json($res->decoded_content) };
     return unless $data;
     return $data if $raw;
 
