@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Carp qw(croak);
+use Encode ();
 use JSON;
 use LWP::UserAgent;
 use URI;
